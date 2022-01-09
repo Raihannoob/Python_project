@@ -17,7 +17,7 @@ print((mydb))
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
     start_urls = [
-        'https://www.kayak.co.in/New-York-Hotels.15830.hotel.ksp',
+        'https://www.kayak.co.in/Hyderabad-Hotels.7297.hotel.ksp',
     ]
 
     def parse(self, response):
@@ -75,13 +75,12 @@ class QuotesSpider(scrapy.Spider):
                 price = "N/A"
             prices.append(price)
             print(price)
-            dataextraction(image, name, ratting, location, price)
+    
             list_lower = list_data[i].css(
                 'div.soom .soom-content-wrapper .soom-freebies-section .soom-freebies .soom-freebie')
             sub_list = []
             for j in range(0, len(list_lower), 1):
                 sub_list.append(list_lower[j].css('span::text').get())
-                # print(list_lower[j].css('span::text').get())
             lower_portion.append(sub_list)
             print()
         for i in range(0, len(list_data), 1):
@@ -91,15 +90,18 @@ class QuotesSpider(scrapy.Spider):
             print(rattings[i])
             print(prices[i])
             print(lower_portion[i])
-            print()
-            dataextraction(images[i], names[i], rattings[i], locations[i], prices[i])
+            Amenities = listToStr = ' '.join(
+                map(str, lower_portion[i]))
+            print(Amenities)
+            dataextraction(names[i], locations[i],
+                           rattings[i], prices[i], Amenities, images[i])
         print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
 
-def dataextraction(image, name, ratting, location, price):
-    sql = "INSERT INTO data(image,name,ratting,location,price) VALUES ( %s, %s, %s, %s, %s)"
+def dataextraction(name, location, ratting, prices, Amenities, images):
+    sql = "INSERT INTO data_from_web(name,location,ratting,prices,Amenities,images) VALUES ( %s, %s, %s, %s, %s, %s)"
 
-    val = (image, name, ratting, location, price)
+    val = (name, location, ratting, prices, Amenities, images)
     mycursor.execute(sql, val)
 
     mydb.commit()
