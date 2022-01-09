@@ -17,7 +17,7 @@ print((mydb))
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
     start_urls = [
-        'https://www.kayak.co.in/Hyderabad-Hotels.7297.hotel.ksp',
+        'https://www.kayak.co.in/Bengaluru-Hotels.14559.hotel.ksp',
     ]
 
     def parse(self, response):
