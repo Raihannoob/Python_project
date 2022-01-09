@@ -13,14 +13,23 @@ mycursor = mydb.cursor()
 
 print((mydb))
 
+url = 'https://www.kayak.co.in/Bengaluru-Hotels.14559.hotel.ksp'
+x = url.split("/")[-1]
+y = x.split("-")[0]
+print(y)
+print("*********************************************")
+
 
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
     start_urls = [
-        'https://www.kayak.co.in/Bengaluru-Hotels.14559.hotel.ksp',
+        url
     ]
 
     def parse(self, response):
+        # x = start_urls("/")[-1]
+        # y = x.split("-")[0]
+        # print(y)
         print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         data = response.css('div.c44F-item')
         images = []
