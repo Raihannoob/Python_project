@@ -22,76 +22,76 @@ class QuotesSpider(scrapy.Spider):
 
     def parse(self, response):
         print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        list_data = response.css('div.c44F-item')
+        data = response.css('div.c44F-item')
         images = []
         names = []
         locations = []
         rattings = []
         prices = []
-        lower_portion = []
-        for i in range(0, len(list_data), 1):
-            value = list_data[i].css(
+        sub_portion = []
+        for i in range(0, len(data), 1):
+            value = data[i].css(
                 'div.soom .soom-photo-wrapper .soom-photo::attr(src)').get()
             if(value != None):
-                image = list_data[i].css(
+                image = data[i].css(
                     'div.soom .soom-photo-wrapper .soom-photo::attr(src)').get()
             else:
                 image = "N/A"
             images.append(image)
             print(image)
-            value1 = list_data[i].css(
+            value1 = data[i].css(
                 'div.soom .soom-content-wrapper .soom-description-wrapper .soom-description .soom-name span::text').get()
             if(value1 != None):
-                name = list_data[i].css(
+                name = data[i].css(
                     'div.soom .soom-content-wrapper .soom-description-wrapper .soom-description .soom-name span::text').get()
             else:
                 name = "N/A"
             names.append(name)
             print(name)
-            value2 = list_data[i].css(
+            value2 = data[i].css(
                 'div.soom .soom-content-wrapper .soom-description-wrapper .soom-description .soom-rating-wrapper span::text').get()
             if(value2 != None):
-                ratting = list_data[i].css(
+                ratting = data[i].css(
                     'div.soom .soom-content-wrapper .soom-description-wrapper .soom-description .soom-rating-wrapper span::text').get()
             else:
                 ratting = "N/A"
             rattings.append(ratting)
             print(ratting)
-            value3 = list_data[i].css(
+            value3 = data[i].css(
                 'div.soom .soom-content-wrapper .soom-description-wrapper .soom-description .soom-price-section .soom-neighborhood::text').get()
             if(value3 != None):
-                location = list_data[i].css(
+                location = data[i].css(
                     'div.soom .soom-content-wrapper .soom-description-wrapper .soom-description .soom-price-section .soom-neighborhood::text').get()
             else:
                 location = "N/A"
             locations.append(location)
             print(location)
-            value4 = list_data[i].css(
+            value4 = data[i].css(
                 'div.soom .soom-content-wrapper .soom-description-wrapper .soom-price::text').get()
             if(value4 != None):
-                price = list_data[i].css(
+                price = data[i].css(
                     'div.soom .soom-content-wrapper .soom-description-wrapper .soom-price::text').get()
             else:
                 price = "N/A"
             prices.append(price)
             print(price)
     
-            list_lower = list_data[i].css(
+            list_lower = data[i].css(
                 'div.soom .soom-content-wrapper .soom-freebies-section .soom-freebies .soom-freebie')
             sub_list = []
             for j in range(0, len(list_lower), 1):
                 sub_list.append(list_lower[j].css('span::text').get())
-            lower_portion.append(sub_list)
+            sub_portion.append(sub_list)
             print()
-        for i in range(0, len(list_data), 1):
+        for i in range(0, len(data), 1):
             print(images[i])
             print(locations[i])
             print(names[i])
             print(rattings[i])
             print(prices[i])
-            print(lower_portion[i])
+            print(sub_portion[i])
             Amenities = listToStr = ' '.join(
-                map(str, lower_portion[i]))
+                map(str, sub_portion[i]))
             print(Amenities)
             dataextraction(names[i], locations[i],
                            rattings[i], prices[i], Amenities, images[i])
