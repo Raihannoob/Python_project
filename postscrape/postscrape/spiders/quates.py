@@ -75,7 +75,7 @@ class QuotesSpider(scrapy.Spider):
                 price = "N/A"
             prices.append(price)
             print(price)
-    
+
             list_lower = data[i].css(
                 'div.soom .soom-content-wrapper .soom-freebies-section .soom-freebies .soom-freebie')
             sub_list = []
